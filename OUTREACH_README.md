@@ -53,7 +53,7 @@ in their first month using it.
 
 Worth a 10-minute look?
 
-👉 Book a demo here: https://synthline.io/#book-demo
+👉 Book a demo here: https://alexgamingmax11-code.github.io/synthline-landing/#book-demo
 
 Best,
 Alex
@@ -82,7 +82,7 @@ and sends confirmations. It integrates with your calendar.
 
 Want to see it in action?
 
-👉 Book a 15-min demo: https://synthline.io/#book-demo
+👉 Book a 15-min demo: https://alexgamingmax11-code.github.io/synthline-landing/#book-demo
 
 Best,
 Alex
@@ -107,7 +107,7 @@ books the consultation — even after hours.
 For a solo/small firm, 2-3 additional clients per month
 from captured calls = $10K-$50K+.
 
-👉 quick demo: https://synthline.io/#book-demo
+👉 quick demo: https://alexgamingmax11-code.github.io/synthline-landing/#book-demo
 
 Best,
 Alex
@@ -130,7 +130,7 @@ Synthline answers, books the appointment into your
 calendar, and sends a text confirmation. You stay in
 the chair, focused on the client.
 
-👉 https://synthline.io/#book-demo
+👉 https://alexgamingmax11-code.github.io/synthline-landing/#book-demo
 
 Best,
 Alex
@@ -151,7 +151,7 @@ during busy hours or after close?
 We built an AI that picks up every call and books
 appointments automatically. Free to try.
 
-👉 https://synthline.io/#book-demo
+👉 https://alexgamingmax11-code.github.io/synthline-landing/#book-demo
 
 Best,
 Alex
@@ -323,4 +323,4 @@ ROI:                   ___x
 ---
 
 *Synthline — AI Voice Agents for Business*
-*https://synthline.io*
+*https://alexgamingmax11-code.github.io/synthline-landing*

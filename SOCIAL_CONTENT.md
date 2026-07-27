@@ -640,7 +640,7 @@ The only thing left is your decision.
 
 Ready to never miss a call again?
 
-👉 synthline.io
+👉 alexgamingmax11-code.github.io/synthline-landing
 
 #AI #SmallBusiness #Action #Decision #Growth
 ```

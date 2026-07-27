@@ -44,7 +44,7 @@ How to send 150+ cold emails per week without paying a dime.
 
    Best,
    Alex
-   synthline.io
+   alexgamingmax11-code.github.io/synthline-landing
    ```
 
 4. **Set up tracking**
@@ -156,7 +156,7 @@ call and books appointments automatically.
 
 Free to try. Worth a 10-minute look?
 
-👉 https://synthline.io/#book-demo
+👉 https://alexgamingmax11-code.github.io/synthline-landing/#book-demo
 
 Best,
 Alex

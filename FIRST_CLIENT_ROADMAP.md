@@ -140,7 +140,7 @@ not for you, I won't follow up."
 When someone says "yes":
 
 ```
-1. Send them: https://synthline.io/#book-demo
+1. Send them: https://alexgamingmax11-code.github.io/synthline-landing/#book-demo
 2. They fill out the form → you get email notification
 3. You call them → walk through the interactive demo on site
 4. Set up free tier: "I'll get you started right now"
@@ -150,4 +150,4 @@ When someone says "yes":
 ---
 
 *Synthline — AI Voice Agents for Business*
-*https://synthline.io*
+*https://alexgamingmax11-code.github.io/synthline-landing*

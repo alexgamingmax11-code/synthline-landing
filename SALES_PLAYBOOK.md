@@ -59,7 +59,7 @@ Plumbing/HVAC companies using Synthline typically capture 8-12 additional jobs p
 Worth a 10-minute look?
 
 [Your name]
-Synthline | synthline.io
+Synthline | alexgamingmax11-code.github.io/synthline-landing
 
 ---
 
@@ -126,7 +126,7 @@ Synthline is an AI phone agent that answers calls 24/7, answers common questions
 Would it make sense to see a 10-minute demo?
 
 [Your name]
-Synthline | synthline.io
+Synthline | alexgamingmax11-code.github.io/synthline-landing
 
 ---
 
@@ -189,7 +189,7 @@ For a firm like yours, capturing just 2-3 additional clients per month could mea
 Worth a quick conversation?
 
 [Your name]
-Synthline | synthline.io
+Synthline | alexgamingmax11-code.github.io/synthline-landing
 
 ---
 
@@ -236,7 +236,7 @@ Salons using Synthline typically capture 5-8 additional bookings per week.
 Want to see how it works?
 
 [Your name]
-Synthline | synthline.io
+Synthline | alexgamingmax11-code.github.io/synthline-landing
 
 ---
 
@@ -261,7 +261,7 @@ Synthline answers your calls 24/7 — handles reservations, takeout orders, cate
 Want a 10-minute demo?
 
 [Your name]
-Synthline | synthline.io
+Synthline | alexgamingmax11-code.github.io/synthline-landing
 
 ---
 
@@ -288,7 +288,7 @@ Medical practices using Synthline report 40% fewer calls hitting the front desk,
 Worth a 10-minute look?
 
 [Your name]
-Synthline | synthline.io
+Synthline | alexgamingmax11-code.github.io/synthline-landing
 
 ---
 
