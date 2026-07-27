@@ -408,7 +408,7 @@
             <a href="#demo">Demo</a>
             <a href="#features">Features</a>
             <a href="#pricing">Pricing</a>
-            <a href="#waitlist" class="btn-primary nav-cta">Join Waitlist</a>
+            <a href="#book-demo" class="btn-primary nav-cta">Book a Demo</a>
         </div>
     </div>
 </nav>
@@ -555,6 +555,74 @@
     </div>
 </section>
 
+<!-- Book a Demo -->
+<section class="demo-section fade-in" id="book-demo" style="padding: 80px 0;">
+    <div class="container">
+        <div class="section-header">
+            <h2>See Synthline in <span class="gradient-text">action</span></h2>
+            <p class="subtitle">Schedule a 15-minute demo. We'll show you how Synthline handles a real call for your specific business.</p>
+        </div>
+        <div class="demo-form-container">
+            <form class="demo-form" id="demo-form" onsubmit="handleDemoSubmit(event)">
+                <div class="demo-form-row">
+                    <input type="text" name="name" placeholder="Your name" required>
+                    <input type="email" name="email" placeholder="Work email" required>
+                </div>
+                <div class="demo-form-row">
+                    <input type="tel" name="phone" placeholder="Phone number" required>
+                    <select name="industry" required>
+                        <option value="">Select your industry</option>
+                        <option value="dental">Dental Clinic</option>
+                        <option value="salon">Hair Salon / Barbershop</option>
+                        <option value="hvac">HVAC / Plumbing</option>
+                        <option value="auto">Auto Repair</option>
+                        <option value="medical">Medical / Vet</option>
+                        <option value="legal">Legal / Law Firm</option>
+                        <option value="restaurant">Restaurant / Cafe</option>
+                        <option value="realestate">Real Estate</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="demo-form-row">
+                    <input type="text" name="business" placeholder="Business name" required>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; font-size: 1.1rem; padding: 16px 32px;">
+                    📞 Book My 15-Min Demo
+                </button>
+            </form>
+            <div class="waitlist-success" id="success-demo">
+                <h3>✅ Demo request received!</h3>
+                <p>We'll reach out within 24 hours to schedule your personalized demo. Check your email for next steps.</p>
+            </div>
+            <p class="hero-note" style="text-align: center; margin-top: 16px;">No commitment. No credit card. Just a live demo tailored to your business.</p>
+        </div>
+    </div>
+</section>
+
+<style>
+    .demo-form-container { max-width: 600px; margin: 0 auto; }
+    .demo-form { display: flex; flex-direction: column; gap: 16px; }
+    .demo-form-row { display: flex; gap: 12px; }
+    .demo-form-row > * { flex: 1; }
+    .demo-form input,
+    .demo-form select {
+        padding: 14px 18px;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        color: var(--text);
+        font-size: 1rem;
+        font-family: inherit;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+    .demo-form select option { background: var(--bg); color: var(--text); }
+    .demo-form input:focus,
+    .demo-form select:focus { border-color: var(--accent-1); }
+    .demo-form input::placeholder { color: var(--text-muted); }
+    @media (max-width: 600px) { .demo-form-row { flex-direction: column; } }
+</style>
+
 <!-- How It Works -->
 <section class="how-it-works fade-in" id="how">
     <div class="container">
@@ -692,6 +760,39 @@ async function handleSubmit(e, pos) {
         // Fallback: show success anyway for demo purposes
         form.style.display = 'none';
         document.getElementById('success-' + pos).classList.add('show');
+    }
+}
+
+// ── Demo Booking Form ──
+async function handleDemoSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = {
+        name: form.querySelector('[name="name"]').value,
+        email: form.querySelector('[name="email"]').value,
+        phone: form.querySelector('[name="phone"]').value,
+        industry: form.querySelector('[name="industry"]').value,
+        business: form.querySelector('[name="business"]').value,
+        _subject: 'Synthline Demo Request'
+    };
+    const btn = form.querySelector('button[type="submit"]');
+    const orig = btn.textContent;
+
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    try {
+        const resp = await fetch(FORMSPREE_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        form.style.display = 'none';
+        document.getElementById('success-demo').classList.add('show');
+    } catch (err) {
+        form.style.display = 'none';
+        document.getElementById('success-demo').classList.add('show');
     }
 }
 
