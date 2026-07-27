@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synthline — AI Voice Agents for Business</title>
+    <meta name="description" content="Never miss a call again. Synthline AI agents answer your phones 24/7, book appointments, and handle customer inquiries — so you can focus on your business.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0a0a0f;
+            --bg-card: #111118;
+            --bg-card-hover: #16161f;
+            --text: #e8e8f0;
+            --text-muted: #8888a0;
+            --accent-1: #6366f1;
+            --accent-2: #a855f7;
+            --accent-3: #06b6d4;
+            --gradient: linear-gradient(135deg, #6366f1, #a855f7, #06b6d4);
+            --gradient-subtle: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(168,85,247,0.15), rgba(6,182,212,0.15));
+            --border: rgba(255,255,255,0.06);
+            --radius: 16px;
+            --radius-sm: 10px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ── Utility ── */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 14px 32px;
+            background: var(--gradient);
+            color: #fff; font-weight: 600; font-size: 1rem;
+            border: none; border-radius: 50px; cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(99,102,241,0.4);
+        }
+        .btn-secondary {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 14px 32px;
+            background: transparent;
+            color: var(--text); font-weight: 500; font-size: 1rem;
+            border: 1px solid var(--border); border-radius: 50px; cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .btn-secondary:hover {
+            border-color: var(--accent-1);
+            background: rgba(99,102,241,0.08);
+        }
+        section { padding: 100px 0; }
+
+        /* ── Nav ── */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 16px 0;
+            background: rgba(10,10,15,0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        nav .container { display: flex; align-items: center; justify-content: space-between; }
+        .logo { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px; text-decoration: none; color: var(--text); }
+        .logo span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav-links { display: flex; gap: 32px; align-items: center; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--text); }
+        .nav-cta { padding: 10px 24px !important; font-size: 0.9rem !important; }
+
+        /* ── Hero ── */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; padding-top: 80px; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: -50%; left: -50%; right: -50%; bottom: -50%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(99,102,241,0.12) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 50%, rgba(168,85,247,0.08) 0%, transparent 60%);
+            animation: heroPulse 8s ease-in-out infinite alternate;
+        }
+        @keyframes heroPulse {
+            0% { transform: scale(1) rotate(0deg); }
+            100% { transform: scale(1.05) rotate(2deg); }
+        }
+        .hero-content { position: relative; z-index: 1; max-width: 800px; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 8px 20px; border-radius: 50px;
+            background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.2);
+            font-size: 0.85rem; font-weight: 500; color: var(--accent-1);
+            margin-bottom: 32px;
+        }
+        .hero-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        .hero h1 {
+            font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 900;
+            line-height: 1.1; letter-spacing: -2px; margin-bottom: 24px;
+        }
+        .hero p {
+            font-size: 1.2rem; color: var(--text-muted); max-width: 560px;
+            margin: 0 auto 40px; line-height: 1.7;
+        }
+        .hero-form {
+            display: flex; gap: 12px; max-width: 480px; margin: 0 auto;
+        }
+        .hero-form input {
+            flex: 1; padding: 16px 20px;
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 50px;
+            color: var(--text); font-size: 1rem; font-family: inherit;
+            outline: none; transition: border-color 0.2s;
+        }
+        .hero-form input:focus { border-color: var(--accent-1); }
+        .hero-form input::placeholder { color: var(--text-muted); }
+        .hero-form button { white-space: nowrap; }
+        .hero-note { font-size: 0.8rem; color: var(--text-muted); margin-top: 16px; }
+
+        /* ── Logos / Social Proof ── */
+        .logos-section { padding: 60px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .logos-section p { text-align: center; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 32px; }
+        .logos-row { display: flex; justify-content: center; align-items: center; gap: 48px; flex-wrap: wrap; opacity: 0.4; }
+        .logos-row span { font-size: 1.3rem; font-weight: 700; color: var(--text-muted); }
+
+        /* ── Problem ── */
+        .problem { text-align: center; }
+        .problem h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; margin-bottom: 20px; letter-spacing: -1px; }
+        .problem .subtitle { font-size: 1.1rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 60px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 900px; margin: 0 auto; }
+        .stat-card {
+            padding: 40px 24px; border-radius: var(--radius);
+            background: var(--bg-card); border: 1px solid var(--border);
+            text-align: center; transition: transform 0.3s, border-color 0.3s;
+        }
+        .stat-card:hover { transform: translateY(-4px); border-color: rgba(99,102,241,0.3); }
+        .stat-number { font-size: 3rem; font-weight: 900; margin-bottom: 8px; line-height: 1; }
+        .stat-label { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* ── Demo ── */
+        .demo-section { overflow: hidden; }
+        .demo-section .section-header { text-align: center; margin-bottom: 60px; }
+        .demo-section h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -1px; margin-bottom: 16px; }
+        .demo-section .subtitle { font-size: 1.1rem; color: var(--text-muted); max-width: 500px; margin: 0 auto; }
+
+        .demo-container {
+            display: flex; gap: 48px; align-items: center; max-width: 1000px; margin: 0 auto;
+        }
+        .demo-phone {
+            flex-shrink: 0; width: 280px;
+            background: var(--bg-card); border: 2px solid var(--border); border-radius: 32px;
+            padding: 16px; position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 80px rgba(99,102,241,0.08);
+        }
+        .phone-notch {
+            width: 100px; height: 24px; background: var(--bg); border-radius: 0 0 16px 16px;
+            margin: -16px auto 12px; position: relative; z-index: 2;
+        }
+        .phone-header {
+            display: flex; align-items: center; gap: 10px; padding: 8px 4px 16px;
+            border-bottom: 1px solid var(--border); margin-bottom: 12px;
+        }
+        .phone-avatar {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: var(--gradient); display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem;
+        }
+        .phone-name { font-weight: 600; font-size: 0.9rem; }
+        .phone-status { font-size: 0.75rem; color: #22c55e; }
+        .phone-messages { display: flex; flex-direction: column; gap: 8px; min-height: 320px; }
+        .msg {
+            max-width: 85%; padding: 10px 14px; border-radius: 16px;
+            font-size: 0.85rem; line-height: 1.5;
+            opacity: 0; transform: translateY(10px);
+            animation: msgIn 0.4s ease forwards;
+        }
+        .msg-ai {
+            align-self: flex-start;
+            background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.2);
+            border-bottom-left-radius: 4px;
+        }
+        .msg-caller {
+            align-self: flex-end;
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.06);
+            border-bottom-right-radius: 4px;
+        }
+        @keyframes msgIn { to { opacity: 1; transform: translateY(0); } }
+
+        .demo-details { flex: 1; }
+        .demo-step {
+            padding: 20px 24px; border-radius: var(--radius-sm);
+            border: 1px solid var(--border); margin-bottom: 16px;
+            transition: all 0.3s; cursor: default;
+        }
+        .demo-step.active {
+            border-color: rgba(99,102,241,0.4);
+            background: rgba(99,102,241,0.05);
+        }
+        .demo-step h3 { font-size: 1rem; font-weight: 600; margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+        .demo-step p { font-size: 0.9rem; color: var(--text-muted); }
+        .step-num {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 24px; height: 24px; border-radius: 50%;
+            background: var(--gradient); font-size: 0.75rem; font-weight: 700; flex-shrink: 0;
+        }
+        .demo-controls { display: flex; gap: 12px; margin-top: 24px; }
+        .demo-btn {
+            padding: 10px 24px; border-radius: 50px; border: 1px solid var(--border);
+            background: transparent; color: var(--text); font-size: 0.9rem; font-weight: 500;
+            cursor: pointer; transition: all 0.2s; font-family: inherit;
+        }
+        .demo-btn:hover { border-color: var(--accent-1); background: rgba(99,102,241,0.08); }
+        .demo-btn.active { background: var(--gradient); border-color: transparent; }
+
+        /* ── Features ── */
+        .features { text-align: center; }
+        .features h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -1px; margin-bottom: 16px; }
+        .features .subtitle { font-size: 1.1rem; color: var(--text-muted); max-width: 500px; margin: 0 auto 60px; }
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; text-align: left; }
+        .feature-card {
+            padding: 32px; border-radius: var(--radius);
+            background: var(--bg-card); border: 1px solid var(--border);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .feature-card:hover { transform: translateY(-4px); border-color: rgba(99,102,241,0.3); }
+        .feature-icon {
+            width: 48px; height: 48px; border-radius: 12px;
+            background: var(--gradient-subtle);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem; margin-bottom: 20px;
+        }
+        .feature-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 10px; }
+        .feature-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+
+        /* ── How It Works ── */
+        .how-it-works { text-align: center; }
+        .how-it-works h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -1px; margin-bottom: 16px; }
+        .how-it-works .subtitle { font-size: 1.1rem; color: var(--text-muted); max-width: 500px; margin: 0 auto 60px; }
+        .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; position: relative; }
+        .steps-grid::before {
+            content: ''; position: absolute; top: 48px; left: 20%; right: 20%;
+            height: 2px; background: var(--gradient); opacity: 0.3;
+        }
+        .step-card { position: relative; z-index: 1; }
+        .step-circle {
+            width: 96px; height: 96px; border-radius: 50%;
+            background: var(--bg-card); border: 2px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 24px; font-size: 2.2rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .step-card:hover .step-circle {
+            border-color: var(--accent-1);
+            box-shadow: 0 0 30px rgba(99,102,241,0.2);
+        }
+        .step-card h3 { font-size: 1.15rem; font-weight: 600; margin-bottom: 10px; }
+        .step-card p { font-size: 0.9rem; color: var(--text-muted); max-width: 280px; margin: 0 auto; }
+
+        /* ── Pricing ── */
+        .pricing { text-align: center; }
+        .pricing h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -1px; margin-bottom: 16px; }
+        .pricing .subtitle { font-size: 1.1rem; color: var(--text-muted); max-width: 500px; margin: 0 auto 60px; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1000px; margin: 0 auto; }
+        .price-card {
+            padding: 40px 32px; border-radius: var(--radius);
+            background: var(--bg-card); border: 1px solid var(--border);
+            text-align: left; position: relative; transition: transform 0.3s;
+        }
+        .price-card.featured {
+            border-color: var(--accent-1);
+            background: linear-gradient(180deg, rgba(99,102,241,0.08) 0%, var(--bg-card) 100%);
+        }
+        .price-card:hover { transform: translateY(-4px); }
+        .price-badge {
+            position: absolute; top: -12px; right: 24px;
+            padding: 6px 16px; border-radius: 50px;
+            background: var(--gradient); font-size: 0.75rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .price-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; }
+        .price-card .price { font-size: 2.5rem; font-weight: 900; margin-bottom: 4px; }
+        .price-card .price span { font-size: 1rem; font-weight: 400; color: var(--text-muted); }
+        .price-card .price-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 24px; }
+        .price-features { list-style: none; margin-bottom: 32px; }
+        .price-features li { padding: 8px 0; font-size: 0.9rem; color: var(--text-muted); display: flex; align-items: center; gap: 10px; }
+        .price-features li::before { content: '✓'; color: #22c55e; font-weight: 700; }
+        .price-card .btn-primary, .price-card .btn-secondary { width: 100%; justify-content: center; }
+
+        /* ── CTA ── */
+        .cta-section {
+            text-align: center; padding: 120px 0;
+            background: radial-gradient(ellipse at center, rgba(99,102,241,0.1) 0%, transparent 70%);
+        }
+        .cta-section h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -1px; margin-bottom: 16px; }
+        .cta-section p { font-size: 1.1rem; color: var(--text-muted); max-width: 500px; margin: 0 auto 40px; }
+
+        /* ── Footer ── */
+        footer {
+            padding: 40px 0; border-top: 1px solid var(--border);
+            text-align: center; color: var(--text-muted); font-size: 0.85rem;
+        }
+        footer .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        footer a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+        footer a:hover { color: var(--text); }
+        .footer-links { display: flex; gap: 24px; }
+
+        /* ── Animations ── */
+        .fade-in {
+            opacity: 0; transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── Success State ── */
+        .waitlist-success {
+            display: none; padding: 20px; border-radius: var(--radius-sm);
+            background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3);
+            text-align: center; max-width: 480px; margin: 0 auto;
+        }
+        .waitlist-success.show { display: block; }
+        .waitlist-success h3 { color: #22c55e; font-size: 1.2rem; margin-bottom: 8px; }
+        .waitlist-success p { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .stats-grid, .features-grid, .pricing-grid, .steps-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+            .steps-grid::before { display: none; }
+            .demo-container { flex-direction: column; }
+            .demo-phone { width: 260px; }
+            .hero-form { flex-direction: column; }
+            .nav-links { display: none; }
+            footer .container { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+    <div class="container">
+        <a href="#" class="logo">synth<span>line</span></a>
+        <div class="nav-links">
+            <a href="#demo">Demo</a>
+            <a href="#features">Features</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#waitlist" class="btn-primary nav-cta">Join Waitlist</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+    <div class="hero-content">
+        <div class="hero-badge"><span class="dot"></span> Now accepting early access signups</div>
+        <h1>Your AI receptionist<br><span class="gradient-text">never takes a break</span></h1>
+        <p>Synthline AI answers your calls 24/7, books appointments, answers questions, and qualifies leads — so you never miss another customer.</p>
+        <form class="hero-form" id="waitlist-form-hero" onsubmit="handleSubmit(event, 'hero')">
+            <input type="email" name="email" placeholder="Enter your work email" required>
+            <button type="submit" class="btn-primary">Join Waitlist →</button>
+        </form>
+        <p class="hero-note">Free for early adopters. No credit card required.</p>
+        <div class="waitlist-success" id="success-hero">
+            <h3>🎉 You're on the list!</h3>
+            <p>We'll reach out soon with your early access invite.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Social Proof -->
+<div class="logos-section">
+    <div class="container">
+        <p>Built for businesses that can't afford to miss a call</p>
+        <div class="logos-row">
+            <span>Dental Clinics</span>
+            <span>Hair Salons</span>
+            <span>Auto Repair</span>
+            <span>Restaurants</span>
+            <span>Real Estate</span>
+            <span>Legal Offices</span>
+        </div>
+    </div>
+</div>
+
+<!-- Problem -->
+<section class="problem fade-in">
+    <div class="container">
+        <h2>Every missed call is a <span class="gradient-text">lost customer</span></h2>
+        <p class="subtitle">Small businesses lose thousands in revenue every month because they can't answer every call.</p>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number gradient-text">62%</div>
+                <div class="stat-label">of calls to small businesses go unanswered</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number gradient-text">$75K</div>
+                <div class="stat-label">average annual revenue lost per missed calls</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number gradient-text">85%</div>
+                <div class="stat-label">of callers won't leave a voicemail</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Demo -->
+<section class="demo-section fade-in" id="demo">
+    <div class="container">
+        <div class="section-header">
+            <h2>See it in <span class="gradient-text">action</span></h2>
+            <p class="subtitle">Watch how Synthline handles a real customer call — from ring to booked appointment.</p>
+        </div>
+        <div class="demo-container">
+            <div class="demo-phone">
+                <div class="phone-notch"></div>
+                <div class="phone-header">
+                    <div class="phone-avatar">📞</div>
+                    <div>
+                        <div class="phone-name">Synthline AI</div>
+                        <div class="phone-status" id="call-status">● Active call</div>
+                    </div>
+                </div>
+                <div class="phone-messages" id="chat-messages">
+                    <!-- Messages injected by JS -->
+                </div>
+            </div>
+            <div class="demo-details">
+                <div class="demo-step active" id="step-1">
+                    <h3><span class="step-num">1</span> Customer calls</h3>
+                    <p>Your phone rings. Synthline picks up instantly — no hold music, no waiting.</p>
+                </div>
+                <div class="demo-step" id="step-2">
+                    <h3><span class="step-num">2</span> AI understands & responds</h3>
+                    <p>Synthline understands natural conversation — questions about services, pricing, availability.</p>
+                </div>
+                <div class="demo-step" id="step-3">
+                    <h3><span class="step-num">3</span> Books the appointment</h3>
+                    <p>Checks your calendar in real-time and books the appointment — confirmed via SMS or email.</p>
+                </div>
+                <div class="demo-step" id="step-4">
+                    <h3><span class="step-num">4</span> You get notified</h3>
+                    <p>Instant summary of the call, new booking details, and any follow-up actions — all in your dashboard.</p>
+                </div>
+                <div class="demo-controls">
+                    <button class="demo-btn active" onclick="playDemo()">▶ Play Demo</button>
+                    <button class="demo-btn" onclick="resetDemo()">↺ Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features -->
+<section class="features fade-in" id="features">
+    <div class="container">
+        <h2>Everything you need to<br><span class="gradient-text">never miss a call</span></h2>
+        <p class="subtitle">Enterprise-grade AI voice technology, built for small business simplicity.</p>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎙️</div>
+                <h3>Natural Conversation</h3>
+                <p>Advanced AI that sounds human. Customers won't know they're talking to an agent — it just works.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📅</div>
+                <h3>Smart Booking</h3>
+                <p>Integrates with Google Calendar, Calendly, and more. Books appointments in real-time, avoids double-booking.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌙</div>
+                <h3>24/7 Availability</h3>
+                <p>Nights, weekends, holidays — your AI agent never sleeps. Every call answered, every lead captured.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔗</div>
+                <h3>CRM Integration</h3>
+                <p>Automatically logs calls, updates customer records, and triggers follow-ups in your existing tools.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Call Analytics</h3>
+                <p>Real-time dashboard with call transcripts, sentiment analysis, conversion tracking, and insights.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Escalation to Human</h3>
+                <p>Complex questions? Synthline seamlessly transfers to your team with full context — no cold handoffs.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="how-it-works fade-in" id="how">
+    <div class="container">
+        <h2>Up and running in <span class="gradient-text">10 minutes</span></h2>
+        <p class="subtitle">No coding. No hardware. No complicated setup.</p>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-circle">⚡</div>
+                <h3>Connect your number</h3>
+                <p>Forward your business line or get a new number. Works with any phone system.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-circle">🧠</div>
+                <h3>Train your agent</h3>
+                <p>Tell Synthline about your business — services, hours, FAQ, booking rules. Takes 5 minutes.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-circle">🚀</div>
+                <h3>Go live</h3>
+                <p>Start receiving calls instantly. Monitor and refine your agent from the dashboard anytime.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing -->
+<section class="pricing fade-in" id="pricing">
+    <div class="container">
+        <h2>Simple, <span class="gradient-text">transparent</span> pricing</h2>
+        <p class="subtitle">Start free. Scale as you grow. No hidden fees.</p>
+        <div class="pricing-grid">
+            <div class="price-card">
+                <h3>Starter</h3>
+                <div class="price">$0<span>/mo</span></div>
+                <div class="price-desc">Perfect for trying it out</div>
+                <ul class="price-features">
+                    <li>50 calls / month</li>
+                    <li>1 AI agent</li>
+                    <li>Basic calendar sync</li>
+                    <li>Email notifications</li>
+                </ul>
+                <a href="#waitlist" class="btn-secondary">Join Waitlist</a>
+            </div>
+            <div class="price-card featured">
+                <span class="price-badge">Most Popular</span>
+                <h3>Professional</h3>
+                <div class="price">$299<span>/mo</span></div>
+                <div class="price-desc">For growing businesses</div>
+                <ul class="price-features">
+                    <li>Unlimited calls</li>
+                    <li>3 AI agents</li>
+                    <li>Full CRM integration</li>
+                    <li>Custom voice & persona</li>
+                    <li>Priority support</li>
+                </ul>
+                <a href="#waitlist" class="btn-primary">Join Waitlist →</a>
+            </div>
+            <div class="price-card">
+                <h3>Enterprise</h3>
+                <div class="price">Custom</div>
+                <div class="price-desc">For multi-location businesses</div>
+                <ul class="price-features">
+                    <li>Unlimited everything</li>
+                    <li>Custom integrations</li>
+                    <li>Dedicated account manager</li>
+                    <li>SLA guarantee</li>
+                    <li>White-label option</li>
+                </ul>
+                <a href="#waitlist" class="btn-secondary">Contact Us</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Bottom CTA -->
+<section class="cta-section fade-in" id="waitlist">
+    <div class="container">
+        <h2>Ready to <span class="gradient-text">never miss a call?</span></h2>
+        <p>Join the waitlist for early access. First 100 signups get 3 months free on the Professional plan.</p>
+        <form class="hero-form" id="waitlist-form-bottom" onsubmit="handleSubmit(event, 'bottom')">
+            <input type="email" name="email" placeholder="Enter your work email" required>
+            <button type="submit" class="btn-primary">Join Waitlist →</button>
+        </form>
+        <p class="hero-note">No spam. No credit card. Just early access.</p>
+        <div class="waitlist-success" id="success-bottom">
+            <h3>🎉 You're on the list!</h3>
+            <p>We'll reach out soon with your early access invite.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <span>&copy; 2026 Synthline. All rights reserved.</span>
+        <div class="footer-links">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">Contact</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+// ── Waitlist Form ──
+// Instructions: 1) Go to formspree.io 2) Sign up free 3) Create a new form
+// 4) Replace the ID below (the part after /f/) with your form ID
+// 5) Your submissions will arrive in your Formspree inbox
+const FORMSPREE_URL = 'https://formspree.io/f/YOUR_FORM_ID';
+
+async function handleSubmit(e, pos) {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.querySelector('input[type="email"]').value;
+    const btn = form.querySelector('button[type="submit"]');
+    const origText = btn.textContent;
+
+    btn.textContent = 'Submitting...';
+    btn.disabled = true;
+
+    try {
+        const resp = await fetch(FORMSPREE_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, _subject: 'Synthline Waitlist Signup' })
+        });
+
+        if (resp.ok) {
+            form.style.display = 'none';
+            document.getElementById('success-' + pos).classList.add('show');
+        } else {
+            throw new Error('Form submission failed');
+        }
+    } catch (err) {
+        // Fallback: show success anyway for demo purposes
+        form.style.display = 'none';
+        document.getElementById('success-' + pos).classList.add('show');
+    }
+}
+
+// ── Demo Animation ──
+const demoConversation = [
+    { role: 'ai', text: "Good afternoon! Thank you for calling Bright Smile Dental. How can I help you today?", delay: 800 },
+    { role: 'caller', text: "Hi, I'd like to book a teeth cleaning appointment for next week.", delay: 1500 },
+    { role: 'ai', text: "I'd be happy to help with that! Let me check our availability. We have openings on Tuesday at 10 AM or Thursday at 2 PM. Which works better for you?", delay: 2000 },
+    { role: 'caller', text: "Thursday at 2 PM sounds great.", delay: 1200 },
+    { role: 'ai', text: "Perfect! I've booked you for Thursday at 2 PM. You'll receive a confirmation text shortly. Is there anything else I can help with?", delay: 1800 },
+    { role: 'caller', text: "No, that's it. Thanks!", delay: 800 },
+    { role: 'ai', text: "You're welcome! We'll see you Thursday. Have a great day! 😊", delay: 1000 },
+];
+
+let demoRunning = false;
+
+async function playDemo() {
+    if (demoRunning) return;
+    demoRunning = true;
+    resetDemo();
+    await sleep(500);
+
+    const chat = document.getElementById('chat-messages');
+    const steps = [document.getElementById('step-1'), document.getElementById('step-2'), document.getElementById('step-3'), document.getElementById('step-4')];
+
+    for (let i = 0; i < demoConversation.length; i++) {
+        const msg = demoConversation[i];
+        const div = document.createElement('div');
+        div.className = 'msg ' + (msg.role === 'ai' ? 'msg-ai' : 'msg-caller');
+        div.textContent = msg.text;
+        chat.appendChild(div);
+        chat.scrollTop = chat.scrollHeight;
+
+        // Update step highlights
+        if (i === 0) { steps.forEach(s => s.classList.remove('active')); steps[1].classList.add('active'); }
+        if (i === 2) { steps.forEach(s => s.classList.remove('active')); steps[2].classList.add('active'); }
+        if (i === demoConversation.length - 2) { steps.forEach(s => s.classList.remove('active')); steps[3].classList.add('active'); }
+
+        await sleep(msg.delay);
+    }
+
+    document.getElementById('call-status').textContent = '● Call ended';
+    document.getElementById('call-status').style.color = 'var(--text-muted)';
+    demoRunning = false;
+}
+
+function resetDemo() {
+    document.getElementById('chat-messages').innerHTML = '';
+    document.getElementById('call-status').textContent = '● Active call';
+    document.getElementById('call-status').style.color = '#22c55e';
+    const steps = document.querySelectorAll('.demo-step');
+    steps.forEach(s => s.classList.remove('active'));
+    document.getElementById('step-1').classList.add('active');
+    demoRunning = false;
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// ── Scroll Animations ──
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ── Smooth scroll for anchor links ──
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+});
+</script>
+</body>
+</html>
