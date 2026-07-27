@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://alexgamingmax11-code.github.io/synthline-landing/sitemap.xml
