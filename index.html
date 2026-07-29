@@ -11,13 +11,13 @@
     <meta property="og:url" content="https://alexgamingmax11-code.github.io/synthline-landing/">
     <meta property="og:title" content="Synthline — AI Voice Agents for Business">
     <meta property="og:description" content="Never miss a call again. Synthline AI answers your phones 24/7, books appointments, and handles customer inquiries.">
-    <meta property="og:image" content="https://alexgamingmax11-code.github.io/synthline-landing/og-image.png">
+    <meta property="og:image" content="https://alexgamingmax11-code.github.io/synthline-landing/og-preview.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Synthline — AI Voice Agents for Business">
     <meta name="twitter:description" content="Never miss a call again. Synthline AI answers your phones 24/7, books appointments, and handles customer inquiries.">
-    <meta name="twitter:image" content="https://alexgamingmax11-code.github.io/synthline-landing/og-image.png">
+    <meta name="twitter:image" content="https://alexgamingmax11-code.github.io/synthline-landing/og-preview.png">
 
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📞</text></svg>">
@@ -387,15 +387,61 @@
         .waitlist-success p { color: var(--text-muted); font-size: 0.9rem; }
 
         /* ── Responsive ── */
+        /* ── Mobile Menu ── */
+        .menu-toggle {
+            display: none; background: none; border: none; color: var(--text);
+            font-size: 1.5rem; cursor: pointer; padding: 8px; z-index: 101;
+        }
+        .menu-toggle svg { width: 28px; height: 28px; }
+
         @media (max-width: 900px) {
             .stats-grid, .features-grid, .pricing-grid, .steps-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
             .steps-grid::before { display: none; }
             .demo-container { flex-direction: column; }
             .demo-phone { width: 260px; }
             .hero-form { flex-direction: column; }
-            .nav-links { display: none; }
+            .menu-toggle { display: block; }
+            .nav-links {
+                display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+                background: rgba(10,10,15,0.98); backdrop-filter: blur(20px);
+                flex-direction: column; justify-content: center; align-items: center;
+                gap: 40px; z-index: 100;
+            }
+            .nav-links.open { display: flex; }
+            .nav-links a { font-size: 1.4rem; }
             footer .container { flex-direction: column; text-align: center; }
         }
+
+        /* ── Demo wave ── */
+        .wave-container {
+            display: flex; align-items: center; gap: 3px; height: 24px;
+            margin-left: auto; opacity: 0.7;
+        }
+        .wave-bar {
+            width: 3px; background: var(--accent-1); border-radius: 2px;
+            height: 4px; animation: waveAnim 0.6s ease-in-out infinite alternate;
+        }
+        .wave-bar:nth-child(1) { animation-delay: 0s; height: 12px; }
+        .wave-bar:nth-child(2) { animation-delay: 0.1s; height: 18px; }
+        .wave-bar:nth-child(3) { animation-delay: 0.2s; height: 8px; }
+        .wave-bar:nth-child(4) { animation-delay: 0.15s; height: 22px; }
+        .wave-bar:nth-child(5) { animation-delay: 0.05s; height: 14px; }
+        .wave-bar:nth-child(6) { animation-delay: 0.25s; height: 10px; }
+        .wave-bar:nth-child(7) { animation-delay: 0.12s; height: 20px; }
+        @keyframes waveAnim { from { transform: scaleY(0.3); } to { transform: scaleY(1); } }
+
+        .typing-indicator {
+            display: inline-flex; align-items: center; gap: 4px; padding: 4px 0;
+            align-self: flex-start;
+        }
+        .typing-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--accent-1); opacity: 0.6;
+            animation: typingBounce 1.2s ease-in-out infinite;
+        }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typingBounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
     </style>
 </head>
 <body>
@@ -404,12 +450,17 @@
 <nav>
     <div class="container">
         <a href="#" class="logo">synth<span>line</span></a>
-        <div class="nav-links">
-            <a href="#demo">Demo</a>
-            <a href="#features">Features</a>
-            <a href="#pricing">Pricing</a>
-            <a href="#book-demo" class="btn-primary nav-cta">Book a Demo</a>
+        <div class="nav-links" id="nav-links">
+            <a href="#demo" onclick="closeMenu()">Demo</a>
+            <a href="#features" onclick="closeMenu()">Features</a>
+            <a href="#pricing" onclick="closeMenu()">Pricing</a>
+            <a href="#book-demo" class="btn-primary nav-cta" onclick="closeMenu()">Book a Demo</a>
         </div>
+        <button class="menu-toggle" id="menu-toggle" onclick="toggleMenu()" aria-label="Toggle menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path id="menu-icon" d="M3 12h18M3 6h18M3 18h18"/>
+            </svg>
+        </button>
     </div>
 </nav>
 
@@ -483,6 +534,15 @@
                     <div>
                         <div class="phone-name">Synthline AI</div>
                         <div class="phone-status" id="call-status">● Active call</div>
+                    </div>
+                    <div class="wave-container" id="wave-container">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
                     </div>
                 </div>
                 <div class="phone-messages" id="chat-messages">
@@ -691,7 +751,7 @@
                     <li>SLA guarantee</li>
                     <li>White-label option</li>
                 </ul>
-                <a href="#waitlist" class="btn-secondary">Contact Us</a>
+                <a href="mailto:hello@synthline.ai" class="btn-secondary">Contact Us</a>
             </div>
         </div>
     </div>
@@ -722,15 +782,22 @@
             <a href="mailto:hello@synthline.ai">Contact</a>
             <a href="https://twitter.com/usesynthline" target="_blank" rel="noopener">Twitter / X</a>
             <a href="https://linkedin.com/company/synthline" target="_blank" rel="noopener">LinkedIn</a>
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
         </div>
     </div>
 </footer>
 
 <script>
+// ── Mobile Menu ──
+function toggleMenu() {
+    document.getElementById('nav-links').classList.toggle('open');
+}
+function closeMenu() {
+    document.getElementById('nav-links').classList.remove('open');
+}
+
 // ── Waitlist Form (Formspree) ──
-// Submissions arrive in your Formspree inbox
 const FORMSPREE_URL = 'https://formspree.io/f/mnjelvgq';
 
 async function handleSubmit(e, pos) {
@@ -738,7 +805,6 @@ async function handleSubmit(e, pos) {
     const form = e.target;
     const email = form.querySelector('input[type="email"]').value;
     const btn = form.querySelector('button[type="submit"]');
-    const origText = btn.textContent;
 
     btn.textContent = 'Submitting...';
     btn.disabled = true;
@@ -750,16 +816,13 @@ async function handleSubmit(e, pos) {
             body: JSON.stringify({ email: email, _subject: 'Synthline Waitlist Signup' })
         });
 
-        if (resp.ok) {
-            form.style.display = 'none';
-            document.getElementById('success-' + pos).classList.add('show');
-        } else {
-            throw new Error('Form submission failed');
-        }
-    } catch (err) {
-        // Fallback: show success anyway for demo purposes
+        if (!resp.ok) throw new Error('Form submission failed');
         form.style.display = 'none';
         document.getElementById('success-' + pos).classList.add('show');
+    } catch (err) {
+        btn.textContent = '✖ Connection error — try again';
+        btn.disabled = false;
+        setTimeout(() => { btn.textContent = 'Join Waitlist →'; }, 3000);
     }
 }
 
@@ -776,7 +839,6 @@ async function handleDemoSubmit(e) {
         _subject: 'Synthline Demo Request'
     };
     const btn = form.querySelector('button[type="submit"]');
-    const orig = btn.textContent;
 
     btn.textContent = 'Sending...';
     btn.disabled = true;
@@ -787,12 +849,13 @@ async function handleDemoSubmit(e) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         });
-
+        if (!resp.ok) throw new Error('Submission failed');
         form.style.display = 'none';
         document.getElementById('success-demo').classList.add('show');
     } catch (err) {
-        form.style.display = 'none';
-        document.getElementById('success-demo').classList.add('show');
+        btn.textContent = '✖ Connection error — try again';
+        btn.disabled = false;
+        setTimeout(() => { btn.textContent = '📞 Book My 15-Min Demo'; }, 3000);
     }
 }
 
@@ -808,41 +871,89 @@ const demoConversation = [
 ];
 
 let demoRunning = false;
+let demoAborted = false;
 
 async function playDemo() {
     if (demoRunning) return;
     demoRunning = true;
+    demoAborted = false;
     resetDemo();
-    await sleep(500);
+    await sleep(600);
 
     const chat = document.getElementById('chat-messages');
-    const steps = [document.getElementById('step-1'), document.getElementById('step-2'), document.getElementById('step-3'), document.getElementById('step-4')];
+    const steps = [
+        document.getElementById('step-1'),
+        document.getElementById('step-2'),
+        document.getElementById('step-3'),
+        document.getElementById('step-4')
+    ];
+    const wave = document.getElementById('wave-container');
+    wave.style.opacity = '1';
+    steps.forEach(s => s.classList.remove('active'));
+    steps[0].classList.add('active');
 
     for (let i = 0; i < demoConversation.length; i++) {
+        if (demoAborted) return;
         const msg = demoConversation[i];
+
+        // Show typing indicator before AI messages
+        if (msg.role === 'ai') {
+            const typing = document.createElement('div');
+            typing.className = 'typing-indicator';
+            typing.id = 'typing-indicator';
+            for (let d = 0; d < 3; d++) {
+                const dot = document.createElement('div');
+                dot.className = 'typing-dot';
+                typing.appendChild(dot);
+            }
+            chat.appendChild(typing);
+            chat.scrollTop = chat.scrollHeight;
+            await sleep(600 + msg.delay);
+        }
+
+        if (demoAborted) return;
+        // Remove typing indicator
+        const typingEl = document.getElementById('typing-indicator');
+        if (typingEl) typingEl.remove();
+
+        // Add the message
         const div = document.createElement('div');
         div.className = 'msg ' + (msg.role === 'ai' ? 'msg-ai' : 'msg-caller');
         div.textContent = msg.text;
         chat.appendChild(div);
         chat.scrollTop = chat.scrollHeight;
 
+        // Speak AI messages via TTS
+        if (msg.role === 'ai' && window.speechSynthesis) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(msg.text);
+            utterance.rate = 1.1;
+            utterance.pitch = 1.0;
+            utterance.volume = 0.8;
+            window.speechSynthesis.speak(utterance);
+        }
+
         // Update step highlights
         if (i === 0) { steps.forEach(s => s.classList.remove('active')); steps[1].classList.add('active'); }
         if (i === 2) { steps.forEach(s => s.classList.remove('active')); steps[2].classList.add('active'); }
-        if (i === demoConversation.length - 2) { steps.forEach(s => s.classList.remove('active')); steps[3].classList.add('active'); }
+        if (i >= demoConversation.length - 2) { steps.forEach(s => s.classList.remove('active')); steps[3].classList.add('active'); }
 
-        await sleep(msg.delay);
+        await sleep(msg.role === 'caller' ? msg.delay : 400);
     }
 
     document.getElementById('call-status').textContent = '● Call ended';
     document.getElementById('call-status').style.color = 'var(--text-muted)';
+    wave.style.opacity = '0';
     demoRunning = false;
 }
 
 function resetDemo() {
+    demoAborted = true;
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
     document.getElementById('chat-messages').innerHTML = '';
     document.getElementById('call-status').textContent = '● Active call';
     document.getElementById('call-status').style.color = '#22c55e';
+    document.getElementById('wave-container').style.opacity = '1';
     const steps = document.querySelectorAll('.demo-step');
     steps.forEach(s => s.classList.remove('active'));
     document.getElementById('step-1').classList.add('active');
